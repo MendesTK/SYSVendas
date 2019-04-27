@@ -12,7 +12,7 @@ namespace SYSVendas.Infra.Data.Contexto
     public class SYSVendasContext : DbContext 
     {
         public SYSVendasContext()
-            : base("SYSVendas")
+            : base("SYSVendas") 
         {
 
         }
@@ -35,7 +35,7 @@ namespace SYSVendas.Infra.Data.Contexto
             modelBuilder.Properties<string>()
                 .Configure(p => p.HasMaxLength(255));
         }
-
+        /*
         public override int SaveChanges()
         {
             foreach(var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperties("DataCadastro") != null))
@@ -51,7 +51,7 @@ namespace SYSVendas.Infra.Data.Contexto
                 }
             }
             return base.SaveChanges();
-        }
+        }*/
 
     }
 
