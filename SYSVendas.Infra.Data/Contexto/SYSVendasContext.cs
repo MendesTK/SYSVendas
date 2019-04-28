@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SYSVendas.Domain.Entities;
+using SYSVendas.Infra.Data.EntityConfig;
 
 namespace SYSVendas.Infra.Data.Contexto
 {
@@ -18,6 +16,7 @@ namespace SYSVendas.Infra.Data.Contexto
         }
 
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Venda> Vendas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -34,11 +33,14 @@ namespace SYSVendas.Infra.Data.Contexto
 
             modelBuilder.Properties<string>()
                 .Configure(p => p.HasMaxLength(255));
+
+            modelBuilder.Configurations.Add(new ProdutoConfiguration());
+            modelBuilder.Configurations.Add(new VendaConfiguration());
         }
-        /*
+        
         public override int SaveChanges()
         {
-            foreach(var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperties("DataCadastro") != null))
+            foreach(var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCadastro") != null))
             {
                 if (entry.State == EntityState.Added)
                 {
@@ -50,9 +52,22 @@ namespace SYSVendas.Infra.Data.Contexto
                     entry.Property("DataCadastro").IsModified = false;
                 }
             }
-            return base.SaveChanges();
-        }*/
 
+            foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataVenda") != null))
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property("DataVenda").CurrentValue = DateTime.Now;
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.Property("DataVenda").IsModified = false;
+                }
+            }
+
+            return base.SaveChanges();
+        }
     }
 
  

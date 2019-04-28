@@ -50,8 +50,12 @@
   <ItemGroup>
     <Compile Include="Contexto\SYSVendasContext.cs" />
     <Compile Include="EntityConfig\ProdutoConfiguration.cs" />
+    <Compile Include="EntityConfig\VendaConfiguration.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ProdutoRepository.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\VendaRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SYSVendas.Domain\SYSVendas.Domain.csproj">
@@ -59,9 +63,7 @@
       <Name>SYSVendas.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

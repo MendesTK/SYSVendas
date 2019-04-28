@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SYSVendas.Domain.Entities
 {
-    class Venda
+    public class Venda
     {
         public int VendaId { get; set; }
-       
+
+        public DateTime DataVenda { get; set; }
+
+        public decimal ValorTotal { get; set; }
+        public virtual ICollection<Produto> Produtos { get; set; }
+
+
 
     }
 }
