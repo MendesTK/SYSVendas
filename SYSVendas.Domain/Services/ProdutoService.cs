@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SYSVendas.Domain.Entities;
 using SYSVendas.Domain.Interfaces.Repositories;
 using SYSVendas.Domain.Interfaces.Services;

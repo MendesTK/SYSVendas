@@ -73,14 +73,17 @@ namespace SYSVendas.MVC.App_Start
             kernel.Bind(typeof(IAppServiceBase<>)).To(typeof(AppServiceBase<>));
             kernel.Bind<IVendaAppService>().To<VendaAppService>();
             kernel.Bind<IProdutoAppService>().To<ProdutoAppService>();
+            kernel.Bind<IDetalheVendaAppService>().To<DetalheVendaAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IVendaService>().To<VendaService>();
             kernel.Bind<IProdutoService>().To<ProdutoService>();
+            kernel.Bind<IDetalheVendaService>().To<DetalheVendaService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IVendaRepository>().To<VendaRepository>();
             kernel.Bind<IProdutoRepository>().To<ProdutoRepository>();
+            kernel.Bind<IDetalheVendaRepository>().To<DetalheVendaRepository>();
         }
     }
 }

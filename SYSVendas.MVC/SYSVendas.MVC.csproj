@@ -158,7 +158,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AddProdutoViewModel.cs" />
+    <Compile Include="ViewModels\NewVendaView.cs" />
     <Compile Include="ViewModels\ProdutoViewModel.cs" />
+    <Compile Include="ViewModels\DetalheVendaViewModel.cs" />
     <Compile Include="ViewModels\VendaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +206,11 @@
     <Content Include="Views\Produtos\Details.cshtml" />
     <Content Include="Views\Produtos\Edit.cshtml" />
     <Content Include="Views\Vendas\Index.cshtml" />
-    <Content Include="Views\Vendas\Create.cshtml" />
     <Content Include="Views\Vendas\Details.cshtml" />
     <Content Include="Views\Vendas\Edit.cshtml" />
+    <Content Include="Views\Vendas\AddProduto.cshtml" />
+    <Content Include="Views\Vendas\Create.cshtml" />
+    <Content Include="Views\Vendas\AddProdutosNaVenda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

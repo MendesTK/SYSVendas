@@ -2,21 +2,24 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
+using System.Reflection;
 using SYSVendas.Domain.Entities;
 using SYSVendas.Infra.Data.EntityConfig;
+using SYSVendas.Infra.Data.Repositories;
 
 namespace SYSVendas.Infra.Data.Contexto
 {
-    public class SYSVendasContext : DbContext 
+    public class SYSVendasContext : DbContext
     {
         public SYSVendasContext()
-            : base("SYSVendas") 
+            : base("SYSVendas")
         {
 
         }
 
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Venda> Vendas { get; set; }
+        public DbSet<DetalheVenda> VendasProdutos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -36,11 +39,12 @@ namespace SYSVendas.Infra.Data.Contexto
 
             modelBuilder.Configurations.Add(new ProdutoConfiguration());
             modelBuilder.Configurations.Add(new VendaConfiguration());
+            modelBuilder.Configurations.Add(new DetalheVendaConfiguration());
         }
-        
+
         public override int SaveChanges()
         {
-            foreach(var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCadastro") != null))
+            foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCadastro") != null))
             {
                 if (entry.State == EntityState.Added)
                 {
@@ -58,17 +62,25 @@ namespace SYSVendas.Infra.Data.Contexto
                 if (entry.State == EntityState.Added)
                 {
                     entry.Property("DataVenda").CurrentValue = DateTime.Now;
+                    //SaveVenda(entry.GetType().GetProperty("VendaId"));
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
                     entry.Property("DataVenda").IsModified = false;
+                    //SaveVenda(entry.GetType().GetProperty("VendaId"));
                 }
             }
 
             return base.SaveChanges();
         }
+
+        private readonly DetalheVendaRepository _detalheVendaRepository;
+
+        void SaveVenda(PropertyInfo id)
+        {
+            
+        }
     }
 
- 
 }

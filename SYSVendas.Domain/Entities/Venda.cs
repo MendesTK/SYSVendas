@@ -10,7 +10,7 @@ namespace SYSVendas.Domain.Entities
         public DateTime DataVenda { get; set; }
 
         public decimal ValorTotal { get; set; }
-        public virtual ICollection<Produto> Produtos { get; set; }
+        public virtual ICollection<DetalheVenda> VendasProdutos { get; set; }
 
 
 

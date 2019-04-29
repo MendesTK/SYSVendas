@@ -10,6 +10,7 @@ namespace SYSVendas.MVC.AutoMapper
         {
             CreateMap<ProdutoViewModel, Produto>();
             CreateMap<VendaViewModel, Venda>();
+            CreateMap<DetalheVendaViewModel, DetalheVenda>();
         }
     }
 }

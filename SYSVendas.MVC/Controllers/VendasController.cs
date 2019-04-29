@@ -12,11 +12,14 @@ namespace SYSVendas.MVC.Controllers
         // GET: Vendas
         private readonly IProdutoAppService _produtoApp;
         private readonly IVendaAppService _vendaApp;
+        private readonly IDetalheVendaAppService _detalheVendaProduto;
 
-        public VendasController(IProdutoAppService produtoApp, IVendaAppService vendaApp)
+        public VendasController(IProdutoAppService produtoApp, IVendaAppService vendaApp,
+            IDetalheVendaAppService detalheVendaAppService)
         {
             _produtoApp = produtoApp;
             _vendaApp = vendaApp;
+            _detalheVendaProduto = detalheVendaAppService;
         }
 
         // GET: Venda
@@ -39,11 +42,11 @@ namespace SYSVendas.MVC.Controllers
         // GET: Venda/Create
         public ActionResult Create()
         {
-            ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
+            
             return View();
         }
 
-        // POST: Cliente/Create
+        // POST: Venda/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(VendaViewModel venda)
@@ -52,12 +55,47 @@ namespace SYSVendas.MVC.Controllers
             {
                 var vendaDomain = Mapper.Map<VendaViewModel, Venda>(venda);
                 _vendaApp.Add(vendaDomain);
-
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome", venda.Produtos);
             return View(venda);
+        }
+
+        // Index de produtos da venda
+        public ActionResult AddProdutosNaVenda()
+        {
+            var produtoViewModel = Mapper.Map<IEnumerable<DetalheVenda>, IEnumerable<DetalheVendaViewModel>>(_detalheVendaProduto.BuscarIdVenda(1));
+
+            return View(produtoViewModel);
+        }
+
+        //GET
+        public ActionResult AddProduto()
+        {
+            ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
+            return View();
+        }
+
+        //POST
+        [HttpPost]
+        public ActionResult AddProduto(AddProdutoViewModel viewAdd)
+        {
+            if (ModelState.IsValid)
+            {
+                var produto = _produtoApp.GetById(viewAdd.ProductId);
+                var detalheVendaViewModel = new DetalheVendaViewModel
+                {
+                    ProdutoId = produto.ProdutoId,
+                    Qtd = viewAdd.Qtd,
+                    Valor = (produto.Valor * viewAdd.Qtd)
+
+                };
+
+
+
+            }
+
+            ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
+            return View();
         }
 
         // GET: Venda/Edit/5

@@ -13,8 +13,8 @@ namespace SYSVendas.Infra.Data.EntityConfig
                 .IsRequired();
 
             Property(v => v.ValorTotal)
-                .IsRequired();
-
+                .IsOptional();
+            /*
             HasMany(v => v.Produtos)
                 .WithMany()
                 .Map(pv =>
@@ -22,7 +22,7 @@ namespace SYSVendas.Infra.Data.EntityConfig
                     pv.MapLeftKey("VendaId");
                     pv.MapRightKey("ProdutoId");
                     pv.ToTable("VendasProdutos");
-                });
+                });*/
         }
     }
 }
