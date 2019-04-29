@@ -2,12 +2,14 @@
 
 @{
     ViewBag.Title = "Produtos";
+
 }
 
 <h2>Produtos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Adicionar Produto", "AddProduto",  new { id = ViewBag.VendaId }, new { @class = "dialog-window btn btn-info" })
+
 </p>
 <table class="table">
     <tr>
@@ -15,7 +17,7 @@
             @Html.DisplayNameFor(model => model.VendaId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProdutoId)
+            @Html.DisplayNameFor(model => model.Produto.Nome)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Qtd)
@@ -32,7 +34,7 @@
             @Html.DisplayFor(modelItem => item.VendaId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProdutoId)
+            @Html.DisplayFor(modelItem => item.Produto.Nome)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Qtd)
@@ -41,8 +43,6 @@
             @Html.DisplayFor(modelItem => item.Valor)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.VendaProdutoId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.VendaProdutoId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.VendaProdutoId })
         </td>
     </tr>

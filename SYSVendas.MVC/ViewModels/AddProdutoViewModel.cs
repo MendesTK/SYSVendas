@@ -9,9 +9,12 @@ namespace SYSVendas.MVC.ViewModels
     public class AddProdutoViewModel
     {
         [Required(ErrorMessage = "O campo {0} é requerido")]
+        public int VendaId { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é requerido")]
         [Range(1, double.MaxValue, ErrorMessage = "Valores maiores que 0")]
         [Display(Name = "Produto", Prompt = "[Selecione um Produto...]")]
-        public int ProductId { get; set; }
+        public int ProdutoId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é requerido")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]

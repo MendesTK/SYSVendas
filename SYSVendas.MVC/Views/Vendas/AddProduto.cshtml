@@ -1,8 +1,12 @@
-﻿@model SYSVendas.MVC.ViewModels.VendaProdutoViewModel
+﻿@model SYSVendas.MVC.ViewModels.AddProdutoViewModel
+
 
 @{
     ViewBag.Title = "Adicionar Produto";
 }
+
+
+
 
 @using (Html.BeginForm())
 {
@@ -10,14 +14,14 @@
 
     <div class="form-horizontal">
 
-        <hr/>
+        <hr />
 
         <div class="form-group">
             @Html.LabelFor(model => model.ProdutoId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ProdutoId", null, ((IList<System.Web.Mvc.ModelMetadata>)ViewData.ModelMetadata.Properties)
 
-                [0].Watermark, htmlAttributes: new { @class = "form-control", @required = "true" })
+[0].Watermark, htmlAttributes: new { @class = "form-control", @required = "true" })
                 @Html.ValidationMessageFor(model => model.ProdutoId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -39,8 +43,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Criar" class="btn btn-info" />
-                @Html.ActionLink("Voltar", "Index", new { }, new { @class = "btn btn-warning" })
+                <input type="submit" value="Criar" id=ViewBag.VendaId class="btn btn-info" />
+                @Html.ActionLink("Voltar", "AddProdutosNaVendaIndex/", new { }, new { @class = "btn btn-warning" })
             </div>
         </div>
     </div>

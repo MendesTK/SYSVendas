@@ -16,6 +16,7 @@ namespace SYSVendas.MVC.ViewModels
         [DataType(DataType.Currency)]
         [Range(typeof(decimal), "0", "99999999999")]
         [Required(ErrorMessage = "Preencha um valor.")]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal Valor { get; set; }
         [ScaffoldColumn(false)]
         public DateTime DataCadastro { get; set; }

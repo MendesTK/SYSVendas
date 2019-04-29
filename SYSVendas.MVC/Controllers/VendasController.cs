@@ -61,41 +61,46 @@ namespace SYSVendas.MVC.Controllers
         }
 
         // Index de produtos da venda
-        public ActionResult AddProdutosNaVenda()
+        public ActionResult AddProdutosNaVendaIndex(int id)
         {
-            var produtoViewModel = Mapper.Map<IEnumerable<DetalheVenda>, IEnumerable<DetalheVendaViewModel>>(_detalheVendaProduto.BuscarIdVenda(1));
-
+            var produtoViewModel = Mapper.Map<IEnumerable<DetalheVenda>, 
+                IEnumerable<DetalheVendaViewModel>>(_detalheVendaProduto.BuscarIdVenda(id));
+            ViewBag.VendaId = id;
             return View(produtoViewModel);
         }
 
         //GET
-        public ActionResult AddProduto()
+        public ActionResult AddProduto(int id)
         {
             ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
-            return View();
+            ViewBag.VendaId = id;
+            return PartialView();
         }
 
+        
         //POST
         [HttpPost]
-        public ActionResult AddProduto(AddProdutoViewModel viewAdd)
+        public ActionResult AddProduto(AddProdutoViewModel viewAdd, int id)
         {
             if (ModelState.IsValid)
             {
-                var produto = _produtoApp.GetById(viewAdd.ProductId);
+                var produto = _produtoApp.GetById(viewAdd.ProdutoId);
                 var detalheVendaViewModel = new DetalheVendaViewModel
                 {
+                    VendaId = id,
                     ProdutoId = produto.ProdutoId,
                     Qtd = viewAdd.Qtd,
                     Valor = (produto.Valor * viewAdd.Qtd)
 
                 };
+                var detalheVendaDomain = Mapper.Map<DetalheVendaViewModel, DetalheVenda>(detalheVendaViewModel);
+                _detalheVendaProduto.Add(detalheVendaDomain);
 
-
-
+                return RedirectToAction("AddProdutosNaVendaIndex/" + detalheVendaViewModel.VendaId);
             }
 
             ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
-            return View();
+            return PartialView();
         }
 
         // GET: Venda/Edit/5
