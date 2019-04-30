@@ -7,12 +7,20 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nova Venda", "Create", new { }, new { @class="btn btn-info"})
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.VendaId)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente.Nome)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ValorTotal)
         </th>
     </tr>
 
@@ -21,11 +29,18 @@
     <td>
         @Html.DisplayFor(modelItem => item.VendaId)
     </td>
+
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.VendaId }) |
-        @Html.ActionLink("Details", "Details", new { id = item.VendaId }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.VendaId }) |
-        @Html.ActionLink("Editar/Ver Produtos", "AddProdutosNaVendaIndex", new { id = item.VendaId })
+        @Html.DisplayFor(modelItem => item.Cliente.Nome)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.ValorTotal)
+    </td>
+
+    <td>
+        @Html.ActionLink("Detalhes", "Details", new { id = item.VendaId }, new { @class="btn btn-secondary"}) 
+        @Html.ActionLink("Adicionar/Ver Produtos", "AddProdutosNaVendaIndex", new { id = item.VendaId }, new { @class="btn btn-secondary"})
     </td>
 </tr>
 }

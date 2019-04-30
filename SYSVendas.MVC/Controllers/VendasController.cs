@@ -9,14 +9,16 @@ namespace SYSVendas.MVC.Controllers
 {
     public class VendasController : Controller
     {
-        // GET: Vendas
+        private readonly IClienteAppService _clienteApp;
         private readonly IProdutoAppService _produtoApp;
         private readonly IVendaAppService _vendaApp;
         private readonly IDetalheVendaAppService _detalheVendaProduto;
-
+       
+        // GET: Vendas
         public VendasController(IProdutoAppService produtoApp, IVendaAppService vendaApp,
-            IDetalheVendaAppService detalheVendaAppService)
+            IDetalheVendaAppService detalheVendaAppService, IClienteAppService clienteApp)
         {
+            _clienteApp = clienteApp;
             _produtoApp = produtoApp;
             _vendaApp = vendaApp;
             _detalheVendaProduto = detalheVendaAppService;
@@ -42,7 +44,7 @@ namespace SYSVendas.MVC.Controllers
         // GET: Venda/Create
         public ActionResult Create()
         {
-            
+            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome",  "Sobrenome");
             return View();
         }
 
@@ -96,60 +98,16 @@ namespace SYSVendas.MVC.Controllers
                 var detalheVendaDomain = Mapper.Map<DetalheVendaViewModel, DetalheVenda>(detalheVendaViewModel);
                 _detalheVendaProduto.Add(detalheVendaDomain);
 
+                var venda = _vendaApp.GetById(id);
+                venda.ValorTotal += detalheVendaDomain.Valor;
+                _vendaApp.Update(venda);
+
+
                 return RedirectToAction("AddProdutosNaVendaIndex/" + detalheVendaViewModel.VendaId);
             }
 
             ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
             return View();
         }
-
-        // GET: Venda/Edit/5
-        public ActionResult Edit(int id)
-        {
-            var venda = _vendaApp.GetById(id);
-            var vendaViewModel = Mapper.Map<Venda, VendaViewModel>(venda);
-
-            ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome", vendaViewModel.Produtos);
-
-            return View(vendaViewModel);
-        }
-
-        // POST: Venda/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(VendaViewModel venda)
-        {
-            if (ModelState.IsValid)
-            {
-                var vendaDomain = Mapper.Map<VendaViewModel, Venda>(venda);
-                _vendaApp.Update(vendaDomain);
-
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome", venda.Produtos);
-            return View(venda);
-        }
-
-        /*
-        // GET: Cliente/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var produto = _produtoApp.GetById(id);
-            var produtoViewModel = Mapper.Map<Produto, ProdutoViewModel>(produto);
-
-            return View(produtoViewModel);
-        }
-
-        // POST: Cliente/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            var produto = _produtoApp.GetById(id);
-            _produtoApp.Remove(produto);
-
-            return RedirectToAction("Index");
-        }*/
     }
 }

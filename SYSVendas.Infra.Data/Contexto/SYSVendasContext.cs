@@ -20,6 +20,8 @@ namespace SYSVendas.Infra.Data.Contexto
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Venda> Vendas { get; set; }
         public DbSet<DetalheVenda> VendasProdutos { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -40,6 +42,7 @@ namespace SYSVendas.Infra.Data.Contexto
             modelBuilder.Configurations.Add(new ProdutoConfiguration());
             modelBuilder.Configurations.Add(new VendaConfiguration());
             modelBuilder.Configurations.Add(new DetalheVendaConfiguration());
+            modelBuilder.Configurations.Add(new ClienteConfiguration());
         }
 
         public override int SaveChanges()

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SYSVendas.Application.Interface;
 using SYSVendas.Domain.Entities;
 using SYSVendas.Domain.Interfaces.Services;

@@ -9,6 +9,8 @@ namespace SYSVendas.MVC.ViewModels
         [Key]
         public int VendaId { get; set; }
 
+        public int ClienteId { get; set; }
+
         [ScaffoldColumn(false)]
         public DateTime DataVenda { get; set; }
 
@@ -17,6 +19,8 @@ namespace SYSVendas.MVC.ViewModels
         [Range(typeof(decimal), "0", "99999999999")]
         public decimal ValorTotal { get; set; }
 
-        public virtual ICollection<ProdutoViewModel> Produtos { get; set; }
+        public virtual ClienteViewModel Cliente { get; set; }
+
+        public virtual ICollection<DetalheVendaViewModel> VendasProdutos { get; set; }
     }
 }

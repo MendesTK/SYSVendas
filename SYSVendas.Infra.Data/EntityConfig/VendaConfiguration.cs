@@ -14,6 +14,9 @@ namespace SYSVendas.Infra.Data.EntityConfig
 
             Property(v => v.ValorTotal)
                 .IsOptional();
+
+            HasRequired(v => v.Cliente)
+                .WithMany().HasForeignKey(v => v.ClienteId);
             /*
             HasMany(v => v.Produtos)
                 .WithMany()

@@ -64,7 +64,7 @@ namespace SYSVendas.MVC.Controllers
         // POST: Produtos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(/*int id,*/ ProdutoViewModel produto)
+        public ActionResult Edit(ProdutoViewModel produto)
         {
             if (ModelState.IsValid)
             {
