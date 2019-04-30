@@ -8,7 +8,9 @@
 <h2>Produtos</h2>
 
 <p>
-    @Html.ActionLink("Adicionar Produto", "AddProduto",  new { id = ViewBag.VendaId }, new { @class = "dialog-window btn btn-info" })
+    @Html.ActionLink("Adicionar Produto", "AddProduto", "Vendas",  new { id = ViewBag.VendaId }, new { @class = "dialog-window btn btn-info"  })
+
+    
 
 </p>
 <table class="table">
@@ -28,24 +30,64 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.VendaId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Produto.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Qtd)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Valor)
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.VendaProdutoId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VendaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Produto.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qtd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.VendaProdutoId })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div class="modal fade" id="AddProduto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-
+     hidden data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Espere por Favor...</div></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+    $(function () {
+            $(document).ready(function () {
+                $("body").on("click", "a.dialog-window", null, function (e) {
+                    e.preventDefault();
+                    var $link = $(this);
+                    var title = $link.text();
+                    $('#AddProduto .modal-title').html(title);
+                    var url = $(this).attr('href');
+                    if (url.indexOf('#') == 0) {
+                        $('#AddProduto').modal('show');
+                    }
+                    else {
+                        $.get(url, function (data) {
+                            $('#AddProduto .te').html(data);
+                            $('#AddProduto').modal();
+                        }).success(function () { $('input:text:visible:first').focus(); });
+
+                    }
+                });
+            });
+    </script>
+    }

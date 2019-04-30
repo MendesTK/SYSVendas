@@ -74,7 +74,7 @@ namespace SYSVendas.MVC.Controllers
         {
             ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
             ViewBag.VendaId = id;
-            return PartialView();
+            return View();
         }
 
         
@@ -100,7 +100,7 @@ namespace SYSVendas.MVC.Controllers
             }
 
             ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
-            return PartialView();
+            return View();
         }
 
         // GET: Venda/Edit/5
