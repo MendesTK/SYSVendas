@@ -81,7 +81,7 @@ namespace SYSVendas.MVC.Controllers
             var produto = _produtoApp.GetById(id);
             var produtoViewModel = Mapper.Map<Produto, ProdutoViewModel>(produto);
 
-            return View(produtoViewModel);
+            return PartialView(produtoViewModel);
         }
 
         // POST: Produtos/Delete/5

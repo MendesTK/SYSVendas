@@ -248,9 +248,7 @@
     <Content Include="Views\Produtos\Edit.cshtml" />
     <Content Include="Views\Vendas\Index.cshtml" />
     <Content Include="Views\Vendas\Details.cshtml" />
-    <Content Include="Views\Vendas\Edit.cshtml" />
     <Content Include="Views\Vendas\Create.cshtml" />
-    <Content Include="Views\Vendas\AddProdutosNaVendaIndex.cshtml" />
     <Content Include="Views\Vendas\AddProduto.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />

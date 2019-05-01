@@ -13,6 +13,7 @@ namespace SYSVendas.Domain.Entities
         public int ProdutoId { get; set; }
         public int Qtd { get; set; }
         public decimal Valor { get; set; }
+        public decimal Total { get; set; }
 
         public virtual Venda Venda { get; set; }
         public virtual Produto Produto { get; set; }

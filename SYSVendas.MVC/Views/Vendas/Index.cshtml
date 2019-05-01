@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
+    <hr />
+<h2>Vendas</h2>
 
 <p>
     @Html.ActionLink("Nova Venda", "Create", new { }, new { @class="btn btn-info"})
@@ -22,6 +22,12 @@
         <th>
             @Html.DisplayNameFor(model => model.ValorTotal)
         </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Cancelado)
+        </th>
+
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -32,15 +38,22 @@
 
     <td>
         @Html.DisplayFor(modelItem => item.Cliente.Nome)
+        @Html.DisplayFor(modelItem => item.Cliente.Sobrenome)
     </td>
 
     <td>
         @Html.DisplayFor(modelItem => item.ValorTotal)
     </td>
+    @if (item.Cancelado)
+    {
+      <td class="text-danger">Cancelado</td>
+    } else
+    {
+        <td>Ativa</td>
+    }
 
     <td>
-        @Html.ActionLink("Detalhes", "Details", new { id = item.VendaId }, new { @class="btn btn-secondary"}) 
-        @Html.ActionLink("Adicionar/Ver Produtos", "AddProdutosNaVendaIndex", new { id = item.VendaId }, new { @class="btn btn-secondary"})
+        @Html.ActionLink("Detalhes", "Details", new { id = item.VendaId }, new { @class = "btn btn-secondary" })
     </td>
 </tr>
 }

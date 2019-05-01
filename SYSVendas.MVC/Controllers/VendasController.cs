@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Mvc;
 using SYSVendas.Application.Interface;
 using SYSVendas.Domain.Entities;
@@ -37,7 +38,7 @@ namespace SYSVendas.MVC.Controllers
         {
             var venda = _vendaApp.GetById(id);
             var vendaViewModel = Mapper.Map<Venda, VendaViewModel>(venda);
-
+            ViewBag.VendaId = id;
             return View(vendaViewModel);
         }
 
@@ -56,19 +57,12 @@ namespace SYSVendas.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var vendaDomain = Mapper.Map<VendaViewModel, Venda>(venda);
+                vendaDomain.ValorTotal = 0;
+                vendaDomain.Cancelado = false;
                 _vendaApp.Add(vendaDomain);
-                return RedirectToAction("Index");
+                return RedirectToAction("Details/" + vendaDomain.VendaId);
             }
             return View(venda);
-        }
-
-        // Index de produtos da venda
-        public ActionResult AddProdutosNaVendaIndex(int id)
-        {
-            var produtoViewModel = Mapper.Map<IEnumerable<DetalheVenda>, 
-                IEnumerable<DetalheVendaViewModel>>(_detalheVendaProduto.BuscarIdVenda(id));
-            ViewBag.VendaId = id;
-            return View(produtoViewModel);
         }
 
         //GET
@@ -76,7 +70,7 @@ namespace SYSVendas.MVC.Controllers
         {
             ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
             ViewBag.VendaId = id;
-            return View();
+            return PartialView();
         }
 
         
@@ -92,22 +86,50 @@ namespace SYSVendas.MVC.Controllers
                     VendaId = id,
                     ProdutoId = produto.ProdutoId,
                     Qtd = viewAdd.Qtd,
-                    Valor = (produto.Valor * viewAdd.Qtd)
+                    Valor = produto.Valor,
+                    Total = (produto.Valor * viewAdd.Qtd)
 
                 };
                 var detalheVendaDomain = Mapper.Map<DetalheVendaViewModel, DetalheVenda>(detalheVendaViewModel);
                 _detalheVendaProduto.Add(detalheVendaDomain);
 
                 var venda = _vendaApp.GetById(id);
-                venda.ValorTotal += detalheVendaDomain.Valor;
+                venda.ValorTotal += detalheVendaDomain.Total;
                 _vendaApp.Update(venda);
 
 
-                return RedirectToAction("AddProdutosNaVendaIndex/" + detalheVendaViewModel.VendaId);
+                return RedirectToAction("Details/" + id);
             }
+            return PartialView();
+        }
 
-            ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
-            return View();
+        public ActionResult RemoverItem(int id, int idVenda)
+        {
+            var item = _detalheVendaProduto.GetById(id);
+            var venda = _vendaApp.GetById(idVenda);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            venda.ValorTotal -= item.Total;
+            item.Total = 0;
+            _vendaApp.Update(venda);
+            _detalheVendaProduto.Update(item);
+            return RedirectToAction("Details/" + idVenda);
+        }
+
+        public ActionResult CancelaVenda(int id)
+        {
+            var venda = _vendaApp.GetById(id);
+
+            foreach (var iv in venda.VendasProdutos)
+            {
+                iv.Total = 0;
+            }
+            venda.ValorTotal = 0;
+            venda.Cancelado = true;
+            _vendaApp.Update(venda);
+            return RedirectToAction("Details/" + id);
         }
     }
 }

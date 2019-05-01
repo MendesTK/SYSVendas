@@ -4,12 +4,15 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<hr />
+
+<h2>Detalhes da Venda</h2> 
+<hr />
+
 
 <div>
-    <h4>VendaViewModel</h4>
-    <hr />
     <dl class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.VendaId)
         </dt>
@@ -24,11 +27,188 @@
 
         <dd>
             @Html.DisplayFor(model => model.Cliente.Nome)
+            @Html.DisplayFor(model => model.Cliente.Sobrenome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataVenda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataVenda)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValorTotal)
+        </dd>
+
+        <dd>
+            @if (Model.Cancelado)
+            {
+                <button class="btn btn-danger" type="button" disabled>Cancelar Venda</button>
+            }
+            else
+            {
+                @Html.ActionLink("Cancelar Venda", "CancelaVenda", new { id = Model.VendaId },
+                      new { @class = "btn btn-danger", onclick = "return confirm('Deseja cancelar a venda?')" })
+            }
+
+
         </dd>
 
     </dl>
 </div>
+
+<h4>Produtos da Venda</h4>
+
+
+@if (Model.VendasProdutos.Count == 0)
+{
+    <h5>Não existe nem um produto na venda</h5>
+}
+else
+{
+    var iv = Model.VendasProdutos.ToArray();
+    <table class="table">
+        <tr>
+
+
+            <th>
+                @Html.DisplayNameFor(model => iv[0].ProdutoId)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => iv[0].Produto.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => iv[0].Qtd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => iv[0].Valor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => iv[0].Total)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.VendasProdutos)
+        {
+            <tr>
+                @if (item.Total.Equals(0))
+                {
+                    <td class="shadow-none p-3 mb-5 bg-light rounded text-danger">
+                        <strike> @Html.DisplayFor(modelItem => item.ProdutoId)</strike>
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded text-danger">
+                        <strike>  @Html.DisplayFor(modelItem => item.Produto.Nome)</strike>
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded text-danger">
+                        <strike>  @Html.DisplayFor(modelItem => item.Qtd)</strike>
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded text-danger">
+                        <strike>  @Html.DisplayFor(modelItem => item.Valor)</strike>
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded text-danger">
+                        <strike> @Html.DisplayFor(modelItem => item.Total)</strike>
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded">
+                        <button class="btn btn-danger" type="button" disabled>Remover</button>
+                    </td>
+                }
+                else
+                {
+                    <td class="shadow-none p-3 mb-5 bg-light rounded">
+                        @Html.DisplayFor(modelItem => item.ProdutoId)
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded">
+                        @Html.DisplayFor(modelItem => item.Produto.Nome)
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded">
+                        @Html.DisplayFor(modelItem => item.Qtd)
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded">
+                        @Html.DisplayFor(modelItem => item.Valor)
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded">
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td class="shadow-none p-3 mb-5 bg-light rounded">
+                        @Html.ActionLink("Remover", "RemoverItem", new { id = item.VendaProdutoId, idVenda = item.VendaId },
+                       new { @class = "btn btn-danger", onclick = "return confirm('Deseja excluir o Produto?')" })
+                    </td>
+                }
+
+
+            </tr>
+
+        }
+
+        <tr class="shadow-none p-3 mb-5 bg-light rounded">
+            <td colspan="4" align="right">
+                <strong>Total</strong>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.ValorTotal)
+            </td>
+            <td></td>
+        </tr>
+    </table>
+}
+<div class="modal fade" id="AddProduto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body"><div class="te">Espere por Favor...</div></div>
+        </div>
+    </div>
+</div>
+<hr />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.VendaId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (Model.Cancelado)
+    {
+        <button class="btn btn-info" type="button" disabled>Adicionar Produto</button>
+    }
+    else
+    {
+        @Html.ActionLink("Adicionar Produto", "AddProduto", new { id = ViewBag.VendaId }, new { @class = "dialog-window btn btn-info" })
+    }
+    @Html.ActionLink("Voltar", "Index", new { }, new { @class = "btn btn-dark" })
 </p>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#AddProduto .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#AddProduto').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#AddProduto .te').html(data);
+                        $('#AddProduto').modal();
+                    });
+
+                }
+            });
+        });
+
+    </script>
+}

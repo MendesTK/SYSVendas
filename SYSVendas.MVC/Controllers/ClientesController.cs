@@ -83,7 +83,7 @@ namespace SYSVendas.MVC.Controllers
             var cliente = _clienteApp.GetById(id);
             var clienteViewModel = Mapper.Map<Cliente, ClienteViewModel>(cliente);
 
-            return View(clienteViewModel);
+            return PartialView(clienteViewModel);
         }
 
         // POST: Clientes/Delete/5

@@ -13,19 +13,14 @@ namespace SYSVendas.Infra.Data.EntityConfig
                 .IsRequired();
 
             Property(v => v.ValorTotal)
-                .IsOptional();
+                .IsRequired();
+
+            Property(v => v.Cancelado)
+                .IsRequired();
 
             HasRequired(v => v.Cliente)
                 .WithMany().HasForeignKey(v => v.ClienteId);
-            /*
-            HasMany(v => v.Produtos)
-                .WithMany()
-                .Map(pv =>
-                {
-                    pv.MapLeftKey("VendaId");
-                    pv.MapRightKey("ProdutoId");
-                    pv.ToTable("VendasProdutos");
-                });*/
+            
         }
     }
 }

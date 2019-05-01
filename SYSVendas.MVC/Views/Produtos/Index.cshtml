@@ -3,11 +3,11 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
+<hr />
+<h2>Produtos</h2>
 
 <p>
-    @Html.ActionLink("Novo Produto", "Create", new { }, new { @class="btn btn-info"})
+    @Html.ActionLink("Novo Produto", "Create", new { }, new { @class = "btn btn-info" })
 </p>
 <table class="table">
     <tr>
@@ -26,26 +26,66 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Valor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ativo)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.ProdutoId },  new { @class="btn btn-secondary"}) 
-            @Html.ActionLink("Detalhes", "Details", new { id=item.ProdutoId }, new { @class="btn btn-secondary"}) 
-            @Html.ActionLink("Deletar", "Delete", new { id=item.ProdutoId }, new { @class="btn btn-danger"})
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ProdutoId }, new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Detalhes", "Details", new { id = item.ProdutoId }, new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Deletar", "Delete", new { id = item.ProdutoId }, new { @class = "dialog-window btn btn-danger" })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div class="modal fade" id="Delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body"><div class="te">Espere por Favor...</div></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#Delete .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#Delete').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#Delete .te').html(data);
+                        $('#Delete').modal();
+                    });
+
+                }
+            });
+        });
+
+    </script>
+}

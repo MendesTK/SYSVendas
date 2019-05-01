@@ -16,7 +16,10 @@ namespace SYSVendas.Infra.Data.EntityConfig
                 .IsRequired();
 
             Property(vp => vp.Valor)
-                .IsOptional();
+                .IsRequired();
+
+            Property(vp => vp.Total)
+                .IsRequired();
         }
     }
 }

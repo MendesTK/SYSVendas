@@ -13,6 +13,8 @@ namespace SYSVendas.Domain.Entities
 
         public decimal ValorTotal { get; set; }
 
+        public bool Cancelado { get; set; }
+
         public virtual Cliente Cliente { get; set; }
 
         public virtual ICollection<DetalheVenda> VendasProdutos { get; set; }
