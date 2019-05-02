@@ -11,5 +11,10 @@ namespace SYSVendas.Infra.Data.Repositories
         {
             return Db.Produtos.Where(p => p.Nome == nome);
         }
+
+        public IEnumerable<Produto> BuscarAtivos(bool c)
+        {
+            return Db.Produtos.Where(p => p.Ativo.Equals(c));
+        }
     }
 }

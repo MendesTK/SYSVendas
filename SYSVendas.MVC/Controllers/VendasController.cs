@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
-using System.Net;
 using System.Web.Mvc;
 using SYSVendas.Application.Interface;
 using SYSVendas.Domain.Entities;
@@ -38,14 +37,13 @@ namespace SYSVendas.MVC.Controllers
         {
             var venda = _vendaApp.GetById(id);
             var vendaViewModel = Mapper.Map<Venda, VendaViewModel>(venda);
-            ViewBag.VendaId = id;
             return View(vendaViewModel);
         }
 
         // GET: Venda/Create
         public ActionResult Create()
         {
-            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome",  "Sobrenome");
+            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome", "Sobrenome");
             return View();
         }
 
@@ -68,7 +66,7 @@ namespace SYSVendas.MVC.Controllers
         //GET
         public ActionResult AddProduto(int id)
         {
-            ViewBag.ProdutoId = new SelectList(_produtoApp.GetAll(), "ProdutoId", "Nome");
+            ViewBag.ProdutoId = new SelectList(_produtoApp.BuscarAtivos(true), "ProdutoId", "Nome");
             ViewBag.VendaId = id;
             return PartialView();
         }

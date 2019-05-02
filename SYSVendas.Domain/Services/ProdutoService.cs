@@ -19,5 +19,10 @@ namespace SYSVendas.Domain.Services
         {
             return _produtoRepository.BuscarPorNome(nome);
         }
+
+        public IEnumerable<Produto> BuscarAtivos(bool c)
+        {
+            return _produtoRepository.BuscarAtivos(c);
+        }
     }
 }

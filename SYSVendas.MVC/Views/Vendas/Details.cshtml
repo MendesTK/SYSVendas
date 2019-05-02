@@ -1,7 +1,7 @@
 ﻿@model SYSVendas.MVC.ViewModels.VendaViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes";
 }
 
 <hr />
@@ -179,7 +179,7 @@ else
     }
     else
     {
-        @Html.ActionLink("Adicionar Produto", "AddProduto", new { id = ViewBag.VendaId }, new { @class = "dialog-window btn btn-info" })
+        @Html.ActionLink("Adicionar Produto", "AddProduto", new { id = Model.VendaId }, new { @class = "dialog-window btn btn-info" })
     }
     @Html.ActionLink("Voltar", "Index", new { }, new { @class = "btn btn-dark" })
 </p>

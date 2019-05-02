@@ -28,6 +28,7 @@ namespace SYSVendas.MVC
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/bootstrap.css",
+                      "~/Content/PagedList.css",
                       "~/Content/site.css"));
 
            

@@ -15,9 +15,16 @@ namespace SYSVendas.Application
             _produtoService = produtoService;
         }
 
+        public IEnumerable<Produto> BuscarAtivos(bool c)
+        {
+            return _produtoService.BuscarAtivos(c);
+        }
+
         public IEnumerable<Produto> BuscarPorNome(string nome)
         {
             return _produtoService.BuscarPorNome(nome);
         }
+
+        
     }
 }

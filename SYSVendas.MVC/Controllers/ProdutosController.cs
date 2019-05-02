@@ -19,8 +19,14 @@ namespace SYSVendas.MVC.Controllers
         // GET: Produtos
         public ActionResult Index()
         {
-            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(_produtoApp.GetAll());
+            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(_produtoApp.BuscarAtivos(true));
             return View(produtoViewModel);
+        }
+
+        public ActionResult IndexInativos()
+        {
+            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(_produtoApp.BuscarAtivos(false));
+            return PartialView(produtoViewModel);
         }
 
         // GET: Produtos/Details/5

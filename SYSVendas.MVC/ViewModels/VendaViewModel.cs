@@ -10,7 +10,8 @@ namespace SYSVendas.MVC.ViewModels
         [Display(Name = "ID")]
         public int VendaId { get; set; }
 
-        [Display(Name = "Cliente")]
+        [Required(ErrorMessage = "O campo {0} é requerido")]
+        [Display(Name = "Cliente", Prompt = "[Selecione um Cliente...]")]
         public int ClienteId { get; set; }
 
         [ScaffoldColumn(false)]

@@ -8,6 +8,7 @@
 
 <p>
     @Html.ActionLink("Novo Produto", "Create", new { }, new { @class = "btn btn-info" })
+    @Html.ActionLink("Inativos", "IndexInativos", new { }, new { @class = "dialog-window btn btn-secondary" })
 </p>
 <table class="table">
     <tr>
@@ -63,6 +64,7 @@
     </div>
 </div>
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
@@ -84,6 +86,20 @@
                     });
 
                 }
+
+                $('#IndexInativos .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#IndexInativos').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#IndexInativos .te').html(data);
+                        $('#IndexInativos').modal();
+                    });
+
+                }
+
             });
         });
 

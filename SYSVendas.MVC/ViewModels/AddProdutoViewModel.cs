@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SYSVendas.MVC.ViewModels
 {
@@ -12,13 +8,12 @@ namespace SYSVendas.MVC.ViewModels
         public int VendaId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é requerido")]
-        [Range(1, double.MaxValue, ErrorMessage = "Valores maiores que 0")]
+        [Range(1, int.MaxValue, ErrorMessage = "Valores maiores que 0")]
         [Display(Name = "Produto", Prompt = "[Selecione um Produto...]")]
         public int ProdutoId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é requerido")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        [Range(0, double.MaxValue, ErrorMessage = "Valores maiores que 0")]
+        [Range(0, int.MaxValue, ErrorMessage = "Valores maiores que 0")]
         [Display(Name = "Quantidade")]
         public int Qtd { get; set; }
     }

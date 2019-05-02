@@ -7,5 +7,7 @@ namespace SYSVendas.Domain.Interfaces.Repositories
     {
         IEnumerable<Produto> BuscarPorNome(string nome);
 
+        IEnumerable<Produto> BuscarAtivos(bool c);
+
     }
 }
