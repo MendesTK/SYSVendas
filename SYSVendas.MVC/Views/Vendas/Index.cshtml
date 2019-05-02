@@ -24,7 +24,7 @@
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.Cancelado)
+            @Html.DisplayNameFor(model => model.StatusVendas.Status)
         </th>
 
         <th></th>
@@ -44,12 +44,17 @@
     <td>
         @Html.DisplayFor(modelItem => item.ValorTotal)
     </td>
-    @if (item.Cancelado)
+    @if (item.StatusId.Equals(3))
     {
-      <td class="text-danger">Cancelado</td>
-    } else
+        <td class="text-danger">
+             @Html.DisplayFor(modelItem => item.StatusVendas.Status)
+        </td>
+    }
+    else
     {
-        <td>Ativa</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusVendas.Status)
+        </td>
     }
 
     <td>

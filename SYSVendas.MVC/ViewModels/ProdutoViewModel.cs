@@ -17,7 +17,7 @@ namespace SYSVendas.MVC.ViewModels
         public string Descricao { get; set; }
 
         [DataType(DataType.Currency)]
-        [Range(typeof(decimal), "0", "99999999999")]
+        [Range(typeof(decimal), "0,00", "99999999999,99")]
         [Required(ErrorMessage = "Preencha um valor.")]
         public decimal Valor { get; set; }
 

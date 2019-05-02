@@ -22,11 +22,13 @@ namespace SYSVendas.MVC
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/moment.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
+                        "~/Scripts/bootstrap-datetimepicker.min.js",
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap-datetimepicker.css",
+                "~/Content/bootstrap-datetimepicker.min.css",
                       "~/Content/bootstrap.css",
                       "~/Content/PagedList.css",
                       "~/Content/site.css"));

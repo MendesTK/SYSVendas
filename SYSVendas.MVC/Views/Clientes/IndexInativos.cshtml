@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SYSVendas.MVC.ViewModels.ProdutoViewModel>
+﻿@model IEnumerable<SYSVendas.MVC.ViewModels.ClienteViewModel>
 
 @{
     ViewBag.Title = "IndexInativos";
@@ -6,7 +6,7 @@
 
 @if (Model.ToList().Count.Equals(0))
 {
-    <h5>Não existe nem um produto inativo</h5>
+    <h5>Não existe nem um cliente inativo</h5>
 }
 else
 {
@@ -17,7 +17,10 @@ else
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
+                @Html.DisplayNameFor(model => model.Sobrenome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cpf)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ativo)
@@ -33,17 +36,19 @@ else
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
+                    @Html.DisplayFor(modelItem => item.Sobrenome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cpf)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Ativo)
                 </td>
                 <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.ProdutoId }, new { @class = "btn btn-secondary" })
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ClienteId }, new { @class = "btn btn-secondary" })
+                </td>
             </tr>
         }
 
     </table>
 }
-
-

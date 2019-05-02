@@ -15,8 +15,8 @@ namespace SYSVendas.Infra.Data.EntityConfig
             Property(v => v.ValorTotal)
                 .IsRequired();
 
-            Property(v => v.Cancelado)
-                .IsRequired();
+            HasRequired(v => v.StatusVendas)
+                .WithMany().HasForeignKey(v => v.StatusId);
 
             HasRequired(v => v.Cliente)
                 .WithMany().HasForeignKey(v => v.ClienteId);

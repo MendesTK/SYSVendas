@@ -1,4 +1,5 @@
-﻿using SYSVendas.Domain.Entities;
+﻿using System.Collections.Generic;
+using SYSVendas.Domain.Entities;
 using SYSVendas.Domain.Interfaces.Repositories;
 using SYSVendas.Domain.Interfaces.Services;
 
@@ -12,6 +13,11 @@ namespace SYSVendas.Domain.Services
             : base(clienteRepository)
         {
             _clienteRepository = clienteRepository;
+        }
+
+        IEnumerable<Cliente> IClienteService.BuscarAtivos(bool cc)
+        {
+            return _clienteRepository.BuscarAtivos(cc);
         }
     }
 }

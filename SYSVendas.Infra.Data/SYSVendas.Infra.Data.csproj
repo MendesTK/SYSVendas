@@ -51,6 +51,7 @@
     <Compile Include="Contexto\SYSVendasContext.cs" />
     <Compile Include="EntityConfig\ClienteConfiguration.cs" />
     <Compile Include="EntityConfig\ProdutoConfiguration.cs" />
+    <Compile Include="EntityConfig\StatusVendaConfiguration.cs" />
     <Compile Include="EntityConfig\VendaConfiguration.cs" />
     <Compile Include="EntityConfig\DetalheVendaConfiguration.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Repositories\ProdutoRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\DetalheVendaRepository.cs" />
+    <Compile Include="Repositories\StatusVendasRepository.cs" />
     <Compile Include="Repositories\VendaRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,7 +69,6 @@
       <Name>SYSVendas.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

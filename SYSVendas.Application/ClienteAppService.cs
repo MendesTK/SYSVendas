@@ -1,4 +1,5 @@
-﻿using SYSVendas.Application.Interface;
+﻿using System.Collections.Generic;
+using SYSVendas.Application.Interface;
 using SYSVendas.Domain.Entities;
 using SYSVendas.Domain.Interfaces.Services;
 
@@ -12,6 +13,11 @@ namespace SYSVendas.Application
             : base(cLienteService)
         {
             _cLienteService = cLienteService;
+        }
+
+        public IEnumerable<Cliente> BuscarAtivos(bool cc)
+        {
+            return _cLienteService.BuscarAtivos(cc);
         }
     }
 }

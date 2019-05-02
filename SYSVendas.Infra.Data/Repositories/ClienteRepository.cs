@@ -10,6 +10,9 @@ namespace SYSVendas.Infra.Data.Repositories
 {
     public class ClienteRepository : RepositoryBase<Cliente>, IClienteRepository
     {
-
+        public IEnumerable<Cliente> BuscarAtivos(bool cc)
+        {
+            return Db.Clientes.Where(c => c.Ativo.Equals(cc));
+        }
     }
 }

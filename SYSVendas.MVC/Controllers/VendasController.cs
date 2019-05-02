@@ -43,7 +43,7 @@ namespace SYSVendas.MVC.Controllers
         // GET: Venda/Create
         public ActionResult Create()
         {
-            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome", "Sobrenome");
+            ViewBag.ClienteId = new SelectList(_clienteApp.BuscarAtivos(true), "ClienteId", "Nome", "Sobrenome");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace SYSVendas.MVC.Controllers
             {
                 var vendaDomain = Mapper.Map<VendaViewModel, Venda>(venda);
                 vendaDomain.ValorTotal = 0;
-                vendaDomain.Cancelado = false;
+                vendaDomain.StatusId = 1;
                 _vendaApp.Add(vendaDomain);
                 return RedirectToAction("Details/" + vendaDomain.VendaId);
             }
@@ -125,7 +125,15 @@ namespace SYSVendas.MVC.Controllers
                 iv.Total = 0;
             }
             venda.ValorTotal = 0;
-            venda.Cancelado = true;
+            venda.StatusId = 3;
+            _vendaApp.Update(venda);
+            return RedirectToAction("Details/" + id);
+        }
+
+        public ActionResult FinalizaVenda(int id)
+        {
+            var venda = _vendaApp.GetById(id);
+            venda.StatusId = 2;
             _vendaApp.Update(venda);
             return RedirectToAction("Details/" + id);
         }

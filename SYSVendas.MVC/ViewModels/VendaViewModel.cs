@@ -25,7 +25,9 @@ namespace SYSVendas.MVC.ViewModels
         public decimal ValorTotal { get; set; }
 
         [Display(Name = "Status")]
-        public bool Cancelado { get; set; }
+        public int StatusId { get; set; }
+
+        public virtual StatusVendasViewModel StatusVendas { get; set; }
 
         public virtual ClienteViewModel Cliente { get; set; }
 

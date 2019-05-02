@@ -22,6 +22,8 @@ namespace SYSVendas.Infra.Data.Contexto
         public DbSet<DetalheVenda> VendasProdutos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
 
+        public DbSet<StatusVendas> StatusVendas { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -43,6 +45,7 @@ namespace SYSVendas.Infra.Data.Contexto
             modelBuilder.Configurations.Add(new VendaConfiguration());
             modelBuilder.Configurations.Add(new DetalheVendaConfiguration());
             modelBuilder.Configurations.Add(new ClienteConfiguration());
+            modelBuilder.Configurations.Add(new StatusVendaConfiguration());
         }
 
         public override int SaveChanges()
@@ -65,24 +68,15 @@ namespace SYSVendas.Infra.Data.Contexto
                 if (entry.State == EntityState.Added)
                 {
                     entry.Property("DataVenda").CurrentValue = DateTime.Now;
-                    //SaveVenda(entry.GetType().GetProperty("VendaId"));
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
                     entry.Property("DataVenda").IsModified = false;
-                    //SaveVenda(entry.GetType().GetProperty("VendaId"));
                 }
             }
 
             return base.SaveChanges();
-        }
-
-        private readonly DetalheVendaRepository _detalheVendaRepository;
-
-        void SaveVenda(PropertyInfo id)
-        {
-            
         }
     }
 

@@ -13,7 +13,9 @@ namespace SYSVendas.Domain.Entities
 
         public decimal ValorTotal { get; set; }
 
-        public bool Cancelado { get; set; }
+        public int StatusId { get; set; }
+
+        public virtual StatusVendas StatusVendas { get; set; }
 
         public virtual Cliente Cliente { get; set; }
 

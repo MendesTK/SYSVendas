@@ -46,13 +46,32 @@
             @Html.DisplayFor(model => model.ValorTotal)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusVendas.Status)
+        </dt>
+
         <dd>
-            @if (Model.Cancelado)
+            @Html.DisplayFor(model => model.StatusVendas.Status)
+        </dd>
+
+        <dd>
+            @if (Model.StatusId.Equals(3))
             {
+                <button class="btn btn-info" type="button" disabled>Finalizar Venda</button>
                 <button class="btn btn-danger" type="button" disabled>Cancelar Venda</button>
+            }
+            else if (Model.StatusId.Equals(1))
+            {
+
+                @Html.ActionLink("Finalizar Venda", "FinalizaVenda", new { id = Model.VendaId },
+                      new { @class = "btn btn-info", onclick = "return confirm('Deseja finalizar a Venda?')" })
+                <td></td>
+                @Html.ActionLink("Cancelar Venda", "CancelaVenda", new { id = Model.VendaId },
+                      new { @class = "btn btn-danger", onclick = "return confirm('Deseja cancelar a venda?')" })
             }
             else
             {
+                <button class="btn btn-info" type="button" disabled>Finalizar Venda</button>
                 @Html.ActionLink("Cancelar Venda", "CancelaVenda", new { id = Model.VendaId },
                       new { @class = "btn btn-danger", onclick = "return confirm('Deseja cancelar a venda?')" })
             }
@@ -139,8 +158,15 @@ else
                         @Html.DisplayFor(modelItem => item.Total)
                     </td>
                     <td class="shadow-none p-3 mb-5 bg-light rounded">
-                        @Html.ActionLink("Remover", "RemoverItem", new { id = item.VendaProdutoId, idVenda = item.VendaId },
-                       new { @class = "btn btn-danger", onclick = "return confirm('Deseja excluir o Produto?')" })
+                        @if (Model.StatusId.Equals(2))
+                        {
+                            <button class="btn btn-danger" type="button" disabled>Remover</button>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Remover", "RemoverItem", new { id = item.VendaProdutoId, idVenda = item.VendaId },
+                                new { @class = "btn btn-danger", onclick = "return confirm('Deseja excluir o Produto?')" })
+                        }
                     </td>
                 }
 
@@ -173,13 +199,17 @@ else
 </div>
 <hr />
 <p>
-    @if (Model.Cancelado)
+    @if (Model.StatusId.Equals(3))
     {
         <button class="btn btn-info" type="button" disabled>Adicionar Produto</button>
     }
-    else
+    else if (Model.StatusId.Equals(1))
     {
         @Html.ActionLink("Adicionar Produto", "AddProduto", new { id = Model.VendaId }, new { @class = "dialog-window btn btn-info" })
+    }
+    else
+    {
+        <button class="btn btn-info" type="button" disabled>Adicionar Produto</button>
     }
     @Html.ActionLink("Voltar", "Index", new { }, new { @class = "btn btn-dark" })
 </p>

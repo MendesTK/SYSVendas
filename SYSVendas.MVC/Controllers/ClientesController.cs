@@ -20,8 +20,14 @@ namespace SYSVendas.MVC.Controllers
         // GET: Clientes
         public ActionResult Index()
         {
-            var clienteViewModel = Mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(_clienteApp.GetAll());
+            var clienteViewModel = Mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(_clienteApp.BuscarAtivos(true));
             return View(clienteViewModel);
+        }
+
+        public ActionResult IndexInativos()
+        {
+            var produtoViewModel = Mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(_clienteApp.BuscarAtivos(false));
+            return PartialView(produtoViewModel);
         }
 
         // GET: Clientes/Details/5
@@ -47,7 +53,6 @@ namespace SYSVendas.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var clienteDomain = Mapper.Map<ClienteViewModel, Cliente>(cliente);
-                clienteDomain.DataNascimento = DateTime.Now;
                 _clienteApp.Add(clienteDomain);
                 return RedirectToAction("Index");
             }

@@ -8,6 +8,7 @@
 
 <p>
     @Html.ActionLink("Novo Cliente", "Create", new { }, new { @class = "btn btn-info" })
+    @Html.ActionLink("Inativos", "IndexInativos", new { }, new { @class = "dialog-window btn btn-secondary" })
 </p>
 <table class="table">
     <tr>
@@ -56,14 +57,13 @@
             <td>
                 @Html.ActionLink("Editar", "Edit", new { id = item.ClienteId }, new { @class = "btn btn-secondary" })
                 @Html.ActionLink("Detalhes", "Details", new { id = item.ClienteId }, new { @class = "btn btn-secondary" })
-                @Html.ActionLink("Deletar", "Delete", new { id = item.ClienteId }, new { @class = "dialog-window btn btn-danger" })
             </td>
         </tr>
     }
 
 </table>
 
-<div class="modal fade" id="Delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+<div class="modal fade" id="IndexInativos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -84,15 +84,15 @@
                 e.preventDefault();
                 var $link = $(this);
                 var title = $link.text();
-                $('#Delete .modal-title').html(title);
+                $('#IndexInativos .modal-title').html(title);
                 var url = $(this).attr('href');
                 if (url.indexOf('#') == 0) {
-                    $('#Delete').modal('show');
+                    $('#IndexInativos').modal('show');
                 }
                 else {
                     $.get(url, function (data) {
-                        $('#Delete .te').html(data);
-                        $('#Delete').modal();
+                        $('#IndexInativos .te').html(data);
+                        $('#IndexInativos').modal();
                     });
 
                 }
