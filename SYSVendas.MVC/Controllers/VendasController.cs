@@ -13,15 +13,34 @@ namespace SYSVendas.MVC.Controllers
         private readonly IProdutoAppService _produtoApp;
         private readonly IVendaAppService _vendaApp;
         private readonly IDetalheVendaAppService _detalheVendaProduto;
-       
+        private readonly IStatusVendasAppService _statusVendas;
+
         // GET: Vendas
         public VendasController(IProdutoAppService produtoApp, IVendaAppService vendaApp,
-            IDetalheVendaAppService detalheVendaAppService, IClienteAppService clienteApp)
+            IDetalheVendaAppService detalheVendaAppService, IClienteAppService clienteApp,
+            IStatusVendasAppService statusVendasAppService)
         {
             _clienteApp = clienteApp;
             _produtoApp = produtoApp;
             _vendaApp = vendaApp;
             _detalheVendaProduto = detalheVendaAppService;
+            _statusVendas = statusVendasAppService;
+
+            if (_statusVendas.GetAll().Count.Equals(0))
+            {
+                var status = new StatusVendasViewModel
+                {
+                    Status = "Aberta"
+                };
+                var statusDomain = Mapper.Map<StatusVendasViewModel, StatusVendas>(status);
+                _statusVendas.Add(statusDomain);
+
+                statusDomain.Status = "Finalizada";
+                _statusVendas.Add(statusDomain);
+
+                statusDomain.Status = "Cancelada";
+                _statusVendas.Add(statusDomain);
+            }
         }
 
         // GET: Venda

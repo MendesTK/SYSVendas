@@ -11,6 +11,7 @@ namespace SYSVendas.Infra.Data.EntityConfig
 
             Property(sv => sv.Status)
                 .IsRequired().HasMaxLength(20);
+
         }
     }
 }
